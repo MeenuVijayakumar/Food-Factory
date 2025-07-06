@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.applab.foodfactory.R
 import com.applab.foodfactory.databinding.FragmentFirstBinding
+import com.applab.foodfactory.xmll.vm.LoginVm
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -14,6 +17,7 @@ import com.applab.foodfactory.databinding.FragmentFirstBinding
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+    private val vm by viewModels<LoginVm>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,9 +35,19 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setObserver()
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            /*vm.login(
+                _binding?.etUname?.text?.trim().toString(),
+                _binding?.etPassword?.text?.trim().toString()
+            )*/
+            findNavController().navigate(R.id.SecondFragment)
+        }
+    }
+
+    fun setObserver() {
+        vm.loginResult.observe(viewLifecycleOwner) {
+            _binding?.result?.text = it
         }
     }
 

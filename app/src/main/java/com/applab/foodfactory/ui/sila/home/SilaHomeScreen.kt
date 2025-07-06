@@ -28,6 +28,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +50,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.applab.foodfactory.ui.sila.components.HomeBottomMenuItem
 import com.applab.foodfactory.ui.sila.components.HomePageBanner
 import com.applab.foodfactory.ui.sila.components.SearchBar1
@@ -56,6 +60,11 @@ import com.applab.foodfactory.ui.sila.model.HomeBottomMenu
 import com.applab.foodfactory.ui.theme.HomeBackground1
 import com.applab.foodfactory.ui.theme.HomeBackground2
 import com.applab.foodfactory.ui.views.fontFamily
+import kotlinx.coroutines.delay
+
+suspend fun Abc() {
+    delay(100L)
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -133,6 +142,9 @@ fun SilaHomeScreen(modifier: Modifier = Modifier) {
                             }
 
                     ) {
+                        LaunchedEffect(Unit) {
+                            Abc()
+                        }
 
                     }
                     Column(modifier = Modifier.fillMaxSize()) {
@@ -150,7 +162,9 @@ fun SilaHomeScreen(modifier: Modifier = Modifier) {
                             fontFamily = fontFamily,
                         )
                         LazyHorizontalGrid(
-                            modifier = Modifier.fillMaxWidth().background(color = Color.White),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(color = Color.White),
                             contentPadding = PaddingValues(horizontal = 10.dp),
                             rows = GridCells.Fixed(2),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
