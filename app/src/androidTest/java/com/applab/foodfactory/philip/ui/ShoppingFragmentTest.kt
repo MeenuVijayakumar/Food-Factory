@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 
 import androidx.test.filters.MediumTest
-import com.androiddevs.shoppinglisttestingyt.launchFragmentInHiltContainer
 import com.applab.foodfactory.R
 import com.applab.foodfactory.philip.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule

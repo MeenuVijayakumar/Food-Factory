@@ -7,10 +7,12 @@ import com.applab.foodfactory.philip.data.local.ShoppingItem
 import com.applab.foodfactory.philip.data.local.ShoppingItemDatabase
 import com.applab.foodfactory.philip.getOrAwaitValue
 import com.google.common.truth.ExpectFailure.assertThat
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -46,7 +48,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun insertShoppingItem() = runBlockingTest {
+    fun insertShoppingItem() = runTest {
 
         val shoppingItem = ShoppingItem("name", 1, 1f, "url", id = 1)
         dao.insertShoppingItem(shoppingItem)
@@ -57,7 +59,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun deleteShoppingItem() = runBlockingTest {
+    fun deleteShoppingItem() = runTest {
         val shoppingItem = ShoppingItem("name", 1, 1f, "url", id = 1)
         dao.insertShoppingItem(shoppingItem)
         dao.deleteShoppingItem(shoppingItem)
@@ -68,7 +70,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun observeTotalPriceSum() = runBlockingTest {
+    fun observeTotalPriceSum() = runTest {
         val shoppingItem1 = ShoppingItem("name", 2, 10f, "url", id = 1)
         val shoppingItem2 = ShoppingItem("name", 4, 5.5f, "url", id = 2)
         val shoppingItem3 = ShoppingItem("name", 0, 100f, "url", id = 3)
