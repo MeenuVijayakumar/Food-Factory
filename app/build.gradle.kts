@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -14,6 +17,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        val API_KEY = "51343491-1c1ae3a22f48d84ecea695dcf"
+        buildConfigField("String", "API_KEY", "\"$API_KEY\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
@@ -40,7 +45,9 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
+
 }
 
 dependencies {
@@ -78,6 +85,16 @@ dependencies {
     // JSON converters (choose one)
     implementation (libs.converter.gson)
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    //hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+    implementation("androidx.room:room-runtime:2.7.2")
+    ksp("androidx.room:room-compiler:2.7.2")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+
 
 
 }
