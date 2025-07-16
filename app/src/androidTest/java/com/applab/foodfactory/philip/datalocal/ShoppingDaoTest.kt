@@ -1,6 +1,8 @@
 package com.applab.foodfactory.philip.datalocal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.applab.foodfactory.philip.data.local.ShoppingDao
 import com.applab.foodfactory.philip.data.local.ShoppingItem
@@ -22,23 +24,20 @@ import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @SmallTest
-@HiltAndroidTest
 class ShoppingDaoTest {
-
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Inject
-    @Named("test_db")
-    lateinit var database: ShoppingItemDatabase
+    private lateinit var database: ShoppingItemDatabase
     private lateinit var dao: ShoppingDao
 
     @Before
     fun setup() {
-        hiltRule.inject()
+        database = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            ShoppingItemDatabase::class.java
+        ).allowMainThreadQueries().build()
         dao = database.shoppingDao()
     }
 
