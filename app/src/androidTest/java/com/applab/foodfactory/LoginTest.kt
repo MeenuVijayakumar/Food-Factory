@@ -22,6 +22,6 @@ class LoginTest {
         onView(withId(R.id.etUname)).perform(typeText("admin"), closeSoftKeyboard())
         onView(withId(R.id.etPassword)).perform(typeText("1234"), closeSoftKeyboard())
         onView(withId(R.id.button_first)).perform(click())
-        onView(withId(R.id.result)).check(matches(withText("Login success")))
+        onView(withId(R.id.result)).check(matches(withText("Login successful")))
     }
 }

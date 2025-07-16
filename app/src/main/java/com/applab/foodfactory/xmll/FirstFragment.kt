@@ -37,11 +37,11 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
         binding.buttonFirst.setOnClickListener {
-            /*vm.login(
+            vm.login(
                 _binding?.etUname?.text?.trim().toString(),
                 _binding?.etPassword?.text?.trim().toString()
-            )*/
-            findNavController().navigate(R.id.SecondFragment)
+            )
+           // findNavController().navigate(R.id.SecondFragment)
         }
     }
 
