@@ -9,6 +9,7 @@ import com.applab.foodfactory.databinding.ItemImageBinding
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 
+
 class ImageAdapter @Inject constructor(
     private val glide: RequestManager
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {

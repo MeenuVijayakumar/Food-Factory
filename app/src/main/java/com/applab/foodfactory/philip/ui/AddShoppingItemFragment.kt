@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.applab.foodfactory.R
 import com.applab.foodfactory.databinding.FragmentAddShoppingItemBinding
-import com.applab.foodfactory.databinding.FragmentShoppingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

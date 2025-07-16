@@ -2,6 +2,7 @@ package com.applab.foodfactory.philip.di
 
 import android.content.Context
 import androidx.room.Room
+import com.applab.foodfactory.R
 import com.applab.foodfactory.philip.data.local.ShoppingDao
 import com.applab.foodfactory.philip.data.local.ShoppingItemDatabase
 import com.applab.foodfactory.philip.data.remote.PixabayAPI
@@ -9,6 +10,8 @@ import com.applab.foodfactory.philip.other.Constants.BASE_URL
 import com.applab.foodfactory.philip.other.Constants.DATABASE_NAME
 import com.applab.foodfactory.philip.repositories.DefaultShoppingRepository
 import com.applab.foodfactory.philip.repositories.ShoppingRepository
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +37,16 @@ object AppModule {
         dao: ShoppingDao,
         api: PixabayAPI
     ) = DefaultShoppingRepository(dao, api) as ShoppingRepository
+
+    @Singleton
+    @Provides
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context).setDefaultRequestOptions(
+        RequestOptions()
+            .placeholder(R.drawable.ic_image)
+            .error(R.drawable.ic_image)
+    )
 
     @Singleton
     @Provides

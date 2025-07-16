@@ -1,3 +1,4 @@
+/*
 package com.applab.foodfactory.philip.ui
 
 import androidx.fragment.app.Fragment
@@ -15,4 +16,4 @@ class ShoppingFragmentFactory @Inject constructor(
             else -> super.instantiate(classLoader, className)
         }
     }
-}
+}*/
