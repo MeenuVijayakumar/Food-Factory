@@ -94,6 +94,31 @@ dependencies {
     ksp("androidx.room:room-compiler:2.7.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    // Local Unit Tests
+//    implementation ("androidx.test:core: 1.2.0" )
+//    testImplementation ("junit:junit:4.13")
+//    testImplementation ("org.hamcrest:hamcrest-all:1.3")
+//    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+//    testImplementation ("org.robolectric:robolectric:4.3.1")
+//    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1")
+//    testImplementation ("com.google.truth:truth:1.0.1")
+//    testImplementation ("org.mockito:mockito-core:2.21.0")
+// Instrumented Unit Tests
+    //androidTestImplementation ("junit:junit:4.13")
+//    androidTestImplementation (libs.junit)
+    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito:2.28.5")
+//    androidTestImplementation ("org-jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1")
+//    androidTestImplementation ("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation ("com.google.truth:truth:1.4.4")
+   // androidTestImplementation ("androidx.test.ext:junit:1.1.1") ex
+   // androidTestImplementation ("androidx.test.espresso:espresso-core: 3.2.0")ex
+    androidTestImplementation ("org.mockito:mockito-core:5.18.0")
+
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.56.2")
+    ksp ("com.google.dagger:hilt-android-compiler:2.56.2")
+    debugImplementation ("androidx.fragment:fragment-testing:1.8.8")
+    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.6.1")
+
 
 
 
