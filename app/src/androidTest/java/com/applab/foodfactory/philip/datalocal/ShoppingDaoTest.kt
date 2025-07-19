@@ -21,7 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 import javax.inject.Named
-
+//with out hilt , manual injection
 @ExperimentalCoroutinesApi
 @SmallTest
 class ShoppingDaoTest {
