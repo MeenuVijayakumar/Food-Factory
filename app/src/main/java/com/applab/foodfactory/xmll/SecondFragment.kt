@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.applab.foodfactory.R
 import com.applab.foodfactory.databinding.FragmentSecondBinding
+import com.applab.foodfactory.practices.generics.GenericAdapter
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -32,7 +33,13 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.apply {
+            rvFruits.adapter = GenericAdapter(MutableList(20) {
+                Fruit(
+                    "Mango",
+                    getString(R.string.lorem_ipsum))
+            })
+        }
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.thirdFragment)
         }
@@ -43,3 +50,8 @@ class SecondFragment : Fragment() {
         _binding = null
     }
 }
+
+data class Fruit(
+    val name: String,
+    val description: String
+)

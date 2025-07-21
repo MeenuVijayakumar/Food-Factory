@@ -1,5 +1,6 @@
 package com.applab.foodfactory.philip.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.applab.foodfactory.philip.data.local.ShoppingDao
 import com.applab.foodfactory.philip.data.local.ShoppingItem
@@ -37,6 +38,7 @@ class DefaultShoppingRepository @Inject constructor(
                     return@let Resource.success(it)
                 } ?: Resource.error("An unknown error occured", null)
             } else {
+                Log.d("TAG", "searchForImage:${response.code()} ")
                 Resource.error("An unknown error occured", null)
             }
         } catch(e: Exception) {

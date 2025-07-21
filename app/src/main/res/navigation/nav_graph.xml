@@ -13,7 +13,7 @@
 
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/secondFragment"
         android:name="com.applab.foodfactory.xmll.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
@@ -23,13 +23,12 @@
         android:id="@+id/thirdFragment"
         android:name="com.applab.foodfactory.xmll.ThirdFragment"
         android:label="fragment_third"
-        tools:layout="@layout/fragment_third" >
-        <action android:id="@+id/thirdToFirst"
-            app:destination="@+id/FirstFragment"
-            app:popUpTo="@+id/FirstFragment"
-            app:popUpToInclusive="false"
-            app:launchSingleTop="true"
-            />
+        tools:layout="@layout/fragment_third">
 
     </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.applab.foodfactory.xmll.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>

@@ -46,19 +46,8 @@ class ThirdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        findNavController().currentBackStackEntry?.let {
-            Log.d("NavStack", it.destination.route ?: it.destination.id.toString())
-        }
         binding.bt3.setOnClickListener {
 
-           /* findNavController().currentBackStackEntry?.destination?.route?.let { current ->
-                findNavController().navigate(R.id.FirstFragment) {
-                    popUpTo(current) { inclusive = false }
-                }
-            }*/
-            findNavController().navigate(
-                R.id.thirdToFirst,
-            )
         }
     }
 

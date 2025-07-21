@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.applab.foodfactory.R
 import com.applab.foodfactory.databinding.FragmentFirstBinding
 import com.applab.foodfactory.xmll.vm.LoginVm
@@ -41,18 +42,26 @@ class FirstFragment : Fragment() {
                 _binding?.etUname?.text?.trim().toString(),
                 _binding?.etPassword?.text?.trim().toString()
             )
-           // findNavController().navigate(R.id.SecondFragment)
+            //
         }
     }
 
     fun setObserver() {
         vm.loginResult.observe(viewLifecycleOwner) {
             _binding?.result?.text = it
+            findNavController().navigate(
+                R.id.mainFragment,null,
+                navOptions {
+                    popUpTo(R.id.FirstFragment) {
+                        inclusive = true
+                    }
+                })
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }

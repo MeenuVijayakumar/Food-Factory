@@ -1,39 +1,38 @@
 package com.applab.foodfactory.presentation
 
-import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.applab.foodfactory.domain.LoginResponse
-import kotlinx.coroutines.CoroutineScope
+import com.applab.foodfactory.ui.views.fontFamily
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,69 +42,75 @@ fun LoginScreen(viewModel: LoginViewModel) {
     val loginState by viewModel.loginState.collectAsState()
     var userInfo by remember { mutableStateOf(LoginResponse("", "", "")) }
     val coroutineScope = rememberCoroutineScope()
-    var counter by remember { mutableIntStateOf(0) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+            .background(
+                brush = Brush.sweepGradient(
+                    colors = listOf(
+                        Color.DarkGray,
+                        Color.Blue,
+                        Color.Green
+                    ),
+                )
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextField(
-            value = email,
-            onValueChange = { viewModel.email.value = it },
-            label = { Text("Email") })
-        Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = password,
-            onValueChange = { viewModel.password.value = it },
-            label = { Text("Password") })
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { coroutineScope.launch(Dispatchers.IO) { viewModel.login()  }}) {
-            Text("Login")
+        Spacer(modifier = Modifier.height(60.dp))
+        Text(
+            "Hello Sign in!",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontSize = 24.sp, color = Color.White),
+            textAlign = TextAlign.Start
+        )
+        Spacer(modifier = Modifier.height(60.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+                )
+                .padding(20.dp), contentAlignment = Alignment.Center
+        ) {
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                TextField(
+                    value = email,
+                    onValueChange = { viewModel.email.value = it },
+                    label = { Text("Email") })
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = password,
+                    onValueChange = { viewModel.password.value = it },
+                    label = { Text("Password") })
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    modifier = Modifier.background(
+                        brush = Brush.sweepGradient(
+                            colors = listOf(
+                                Color.Green,
+                                Color.Blue
+                            )
+                        )
+                    ), onClick = { coroutineScope.launch(Dispatchers.IO) { viewModel.login() } }) {
+                    Text("Login")
+                }
+                Spacer(Modifier.height(40.dp))
+            }
+
         }
-        Button(onClick = {counter++}) {
-            Text("Increment Counter")
-        }
-        SideEffect {
-            Log.e("LoginScreen___", "LoginScreen___$counter ", )
-        }
-        Spacer(Modifier.height(40.dp))
+
         if (userInfo.username.isNotBlank())
             Text("Welcome, ${userInfo.username}", color = Color.Green)
-        Text("Counter is $counter",color = Color.Green)
 
     }
 
-    DisposableEffect(loginState) {
-        val scope = CoroutineScope(Dispatchers.Default)
-        val job = scope.launch {
-            while (true) {
-                delay(10)
-                counter += 1
-                Log.e("","Timer is still working ${counter}")
-            }
-        }
-
-        if (loginState is LoginUiState.Success){
-            job.cancel()
-        }
-
-
-
-
-        onDispose { job.cancel() }
-
-    }
-    val showButton by remember {
-        derivedStateOf {
-            counter > 0
-        }
-    }
-    produceState(1) {
-        viewModel.login()
-        value = 10
-    }
 
     when (loginState) {
         LoginUiState.Loading -> Text("Loading...", color = Color.Gray)
@@ -121,7 +126,6 @@ fun LoginScreen(viewModel: LoginViewModel) {
         LoginUiState.Idle -> {}
         else -> {}
     }
-
 
 
 }
