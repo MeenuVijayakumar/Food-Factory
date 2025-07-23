@@ -1,6 +1,8 @@
 package com.applab.foodfactory.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -21,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -90,24 +95,17 @@ fun LoginScreen(viewModel: LoginViewModel) {
                     onValueChange = { viewModel.password.value = it },
                     label = { Text("Password") })
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(
-                    modifier = Modifier.background(
-                        brush = Brush.sweepGradient(
-                            colors = listOf(
-                                Color.Green,
-                                Color.Blue
-                            )
-                        )
-                    ), onClick = { coroutineScope.launch(Dispatchers.IO) { viewModel.login() } }) {
-                    Text("Login")
+                GradientButton(label = "Login") {
+                    coroutineScope.launch(Dispatchers.IO) { viewModel.login() }
                 }
                 Spacer(Modifier.height(40.dp))
+                if (userInfo.username.isNotBlank())
+                    Text("Welcome, ${userInfo.username}", color = Color.Green)
+
             }
 
         }
 
-        if (userInfo.username.isNotBlank())
-            Text("Welcome, ${userInfo.username}", color = Color.Green)
 
     }
 
@@ -116,6 +114,7 @@ fun LoginScreen(viewModel: LoginViewModel) {
         LoginUiState.Loading -> Text("Loading...", color = Color.Gray)
         is LoginUiState.Success -> {
             userInfo = (loginState as LoginUiState.Success).user
+            DashboardScreen()
         }
 
         is LoginUiState.Error -> Text(
@@ -127,11 +126,44 @@ fun LoginScreen(viewModel: LoginViewModel) {
         else -> {}
     }
 
+}
 
+@Composable
+fun GradientButton(
+    label: String, labelColor: Color = Color.White,
+    gradientList: List<Color> = listOf(
+        Color.Blue,
+        Color.Green
+    ),
+    onGradientButtonClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .background(
+                brush = Brush.linearGradient(
+                    colors = gradientList
+                ), shape = RoundedCornerShape(20.dp)
+            )
+            .padding(horizontal = 20.dp, vertical = 10.dp)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = { onGradientButtonClick() })
+
+
+    ) {
+        Text(text = label, style = TextStyle(color = labelColor, fontSize = 16.sp))
+    }
 }
 
 @Preview
 @Composable
 private fun LoginPreview() {
     LoginScreen(viewModel())
+}
+
+@Preview
+@Composable
+private fun PreviewGradientButton() {
+    GradientButton("Gradient Button") {}
 }

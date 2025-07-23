@@ -15,6 +15,11 @@ import com.applab.foodfactory.xmll.vm.LoginVm
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+open class hello{
+    protected val a =10
+
+}
+
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null

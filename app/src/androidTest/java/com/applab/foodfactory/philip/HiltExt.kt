@@ -18,7 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
+    @StyleRes themeResId: Int = /*R.style.FragmentScenarioEmptyFragmentActivityTheme*/0,
     crossinline action: T.() -> Unit = {}
 ) {
     val mainActivityIntent = Intent.makeMainActivity(
@@ -46,6 +46,29 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     }
 
 }
+
+interface  hello{
+    val a: Int
+        get() = 10
+
+    fun pri(){
+
+    }
+     fun dum()
+}
+class B: hello{
+    override val a: Int
+        get() = super.a
+    override fun pri() {
+        TODO("Not yet implemented")
+    }
+
+    override fun dum() {
+        TODO("Not yet implemented")
+    }
+
+}
+
 
 
 
