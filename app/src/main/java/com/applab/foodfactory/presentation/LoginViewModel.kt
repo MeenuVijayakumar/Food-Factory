@@ -7,8 +7,11 @@ import com.applab.foodfactory.data.AuthRepositoryImpl
 import com.applab.foodfactory.data.RetrofitInstance
 import com.applab.foodfactory.domain.LoginResponse
 import com.applab.foodfactory.domain.LoginUseCase
+import com.applab.foodfactory.practices.User
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.acos
 
 sealed class LoginUiState {
     data object Idle : LoginUiState()
@@ -41,5 +44,10 @@ class LoginViewModel : ViewModel() {
                 loginState.value = LoginUiState.Error(e.message?:"Error")
             }
         }
+    }
+
+    suspend fun fetchUserData(id:Int): LoginResponse{
+        delay(1000)
+        return LoginResponse(username = "meenu", email = "nfbdvbh", accessToken = "")
     }
 }

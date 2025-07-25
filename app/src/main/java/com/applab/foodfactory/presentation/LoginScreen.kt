@@ -14,12 +14,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -36,17 +39,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.applab.foodfactory.domain.LoginResponse
+import com.applab.foodfactory.practices.User
 import com.applab.foodfactory.ui.views.fontFamily
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 @Composable
-fun LoginScreen(viewModel: LoginViewModel) {
+fun LoginScreen(viewModel: LoginViewModel,userId:Int = 0) {
     val email by remember { viewModel.email }
     val password by remember { viewModel.password }
     val loginState by viewModel.loginState.collectAsState()
     var userInfo by remember { mutableStateOf(LoginResponse("", "", "")) }
     val coroutineScope = rememberCoroutineScope()
+    val userState = produceState<LoginUiState>(initialValue = LoginUiState.Loading, key1= userId) {
+        value =try {
+            val user = viewModel.fetchUserData(userId)
+            LoginUiState.Success(user)
+        } catch (ex: Exception){
+            LoginUiState.Error("")
+        }
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -84,6 +99,7 @@ fun LoginScreen(viewModel: LoginViewModel) {
                 .padding(20.dp), contentAlignment = Alignment.Center
         ) {
 
+
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 TextField(
                     value = email,
@@ -102,9 +118,25 @@ fun LoginScreen(viewModel: LoginViewModel) {
                 if (userInfo.username.isNotBlank())
                     Text("Welcome, ${userInfo.username}", color = Color.Green)
 
+                when(val state = userState){
+                    LoginUiState.Loading -> {
+                        CircularProgressIndicator()
+                    }
+
+                    is LoginUiState.Success -> {
+                            Text("ID: ${state.user.accessToken}", fontSize = 18.sp)
+                            Text("Name: ${state.user.username}", fontSize = 20.sp)
+                            Text("Email: ${state.user.email}", fontSize = 18.sp)
+                    }
+
+                    is LoginUiState.Error -> {
+                        Text(state.message, color = Color.Red, fontSize = 16.sp)
+                    }
+                }
             }
 
         }
+
 
 
     }

@@ -13,10 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.applab.foodfactory.practices.User
+import com.applab.foodfactory.ui.theme.LocalTheme
 
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
@@ -25,11 +29,14 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
         val searchResults by viewModel.resultForSearch.collectAsState()
         val productList by viewModel.userList.collectAsState()
 
+
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
             value = searchText,
             onValueChange = { viewModel.updateSearchQuery(it) },
-            label = {Text("Search")})
+            label = { Text("Search") })
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -38,11 +45,11 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
                 items(searchResults) {
                     Text(it)
                 }
-            }else Text("No data")
-        Text("Combine Example")
+            } else Text("No data")
+        Text("Combine Example", style = TextStyle(color = LocalTheme.current.textColor))
 
         LazyColumn {
-            items(productList){
+            items(productList) {
                 Text("${it.name}'s price is ${it.price} for ${it.quantity}items")
             }
         }
