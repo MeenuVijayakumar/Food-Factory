@@ -38,7 +38,7 @@ object AppModule {
         api: PixabayAPI
     ) = DefaultShoppingRepository(dao, api) as ShoppingRepository
 
-    @Singleton
+   /* @Singleton
     @Provides
     fun provideGlideInstance(
         @ApplicationContext context: Context
@@ -46,7 +46,7 @@ object AppModule {
         RequestOptions()
             .placeholder(R.drawable.ic_image)
             .error(R.drawable.ic_image)
-    )
+    )*/
 
     @Singleton
     @Provides

@@ -72,7 +72,7 @@ class AddShoppingItemFragment : Fragment(R.layout.fragment_add_shopping_item) {
                         findNavController().popBackStack()
                     }
                     Status.ERROR -> {
-                        Toast.makeText(context, "Unknown error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Unknown error ${result.message}", Toast.LENGTH_SHORT).show()
 
                     }
                     Status.LOADING -> {
